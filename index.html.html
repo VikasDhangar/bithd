@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Priyanshi</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f8c8dc, #ffe9b3, #ffffff);
+    text-align: center;
+    color: #fff;
+    overflow-x: hidden;
+  }
+  .container { padding: 20px; max-width: 1200px; margin: auto; }
+  h1 { font-size: 2.8rem; margin-top: 40px; animation: fadeIn 2s ease; color:#6a0d91; }
+  p { font-size: 1.2rem; margin: 20px auto; width: 90%; line-height: 1.6; animation: fadeIn 2.5s ease; color:#6a0d91; }
+  .photo-box { margin-top: 30px; animation: zoomIn 2s ease; }
+  .photo-box img { width: 260px; height: 260px; object-fit: cover; border-radius: 20px; border: 4px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.3s; }
+  .photo-box img:hover { transform: scale(1.05); }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 40px; justify-items: center; }
+  .gallery img { width: 100%; max-width: 180px; height: 180px; object-fit: cover; border-radius: 15px; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.3s; }
+  .gallery img:hover { transform: scale(1.1); }
+
+  .btn { display: inline-block; margin-top: 20px; background: #fff; color: #d45ba1; padding: 12px 30px; font-size: 1.2rem; border-radius: 30px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.2); animation: pulse 2s infinite; cursor:pointer; }
+
+  /* Fullscreen Slider */
+  .slider { display: none; position: fixed; z-index: 1000; left:0; top:0; width:100%; height:100%; background: rgba(0,0,0,0.95); justify-content:center; align-items:center; overflow:hidden; }
+  .slider img { width: 90vw; height: 90vh; object-fit: contain; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.5s ease; }
+  .slider img.show { opacity: 1; }
+  .prev, .next { position:absolute; top:50%; transform:translateY(-50%); font-size:3rem; color:#fff; padding:10px 20px; cursor:pointer; user-select:none; transition:0.3s; }
+  .prev:hover, .next:hover { color:#ff6f91; }
+  .prev { left:20px; } .next { right:20px; }
+  .close { position:absolute; top:20px; right:30px; font-size:2.5rem; color:#fff; cursor:pointer; transition:0.3s; }
+  .close:hover { color:#ff6f91; }
+
+  @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+  @keyframes zoomIn { from{transform:scale(0.6);opacity:0;} to{transform:scale(1);opacity:1;} }
+  @keyframes pulse { 0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);} }
+
+  @media(max-width:768px) {
+    h1{ font-size:2rem; } p{ font-size:1rem; }
+    .photo-box img{ width:200px; height:200px; }
+    .gallery img{ max-width:150px; height:150px; }
+    .slider img { width: 95vw; height: 95vh; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1> Happy Birthday Priyanshi </h1>
+  <p>On this special day of yours, I hope you find happiness, peace, and everything you truly deserve. Priyanshi, wishing you a wonderful year.. 💖</p>
+
+  <div class="photo-box">
+    <img src="main.jpg" class="clickable-photo" />
+  </div>
+
+  <p>"✨✨May Radha Rani bless you with peace, happiness, and a beautiful year ahead." ✨✨</p>
+
+  <h2 style="margin-top:40px; color:#6a0d91;">Priyanshi you are such a pretty yrr</h2>
+  <div class="gallery">
+    <img src="one.jpg" class="clickable-photo" />
+    <img src="seven.jpg" class="clickable-photo" />
+    <img src="three.jpg" class="clickable-photo" />
+    <img src="two.jpg" class="clickable-photo" />
+    <img src="four.jpg" class="clickable-photo" />
+    <img src="six.jpg" class="clickable-photo" />
+  </div>
+
+  <audio id="birthdaySong" loop>
+    <source src="music.unknown" type="audio/mpeg">
+  </audio>
+  <div>
+    <button class="btn" id="toggleSong">⏸</button>
+  </div>
+</div>
+
+<!-- Slider Lightbox -->
+<div class="slider" id="slider">
+  <span class="close" id="close">&times;</span>
+  <span class="prev" id="prev">&#10094;</span>
+  <img id="slider-img" src="">
+  <span class="next" id="next">&#10095;</span>
+</div>
+
+<script>
+  const photos = document.querySelectorAll('.clickable-photo');
+  const slider = document.getElementById('slider');
+  const sliderImg = document.getElementById('slider-img');
+  const closeBtn = document.getElementById('close');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  let currentIndex = 0;
+  const photoArray = Array.from(photos).map(img => img.src);
+
+  function showImage(index){
+    sliderImg.classList.remove('show');
+    sliderImg.src = photoArray[index];
+    setTimeout(()=>sliderImg.classList.add('show'),50);
+  }
+
+  photos.forEach((photo,index)=>{
+    photo.addEventListener('click',()=>{
+      currentIndex=index;
+      showImage(currentIndex);
+      slider.style.display='flex';
+    });
+  });
+
+  closeBtn.addEventListener('click',()=>slider.style.display='none');
+  prevBtn.addEventListener('click',()=>{ currentIndex=(currentIndex-1+photoArray.length)%photoArray.length; showImage(currentIndex); });
+  nextBtn.addEventListener('click',()=>{ currentIndex=(currentIndex+1)%photoArray.length; showImage(currentIndex); });
+  slider.addEventListener('click',(e)=>{ if(e.target===slider) slider.style.display='none'; });
+
+  const song = document.getElementById('birthdaySong');
+  const toggleSongBtn = document.getElementById('toggleSong');
+
+  window.addEventListener('load', () => {
+    song.play().catch(() => {});
+  });
+
+  toggleSongBtn.addEventListener('click', () => {
+    if(song.paused){
+      song.play();
+      toggleSongBtn.textContent = '⏸ Pause Song';
+    } else {
+      song.pause();
+      toggleSongBtn.textContent = '▶ Play Song';
+    }
+  });
+</script>
+
+</body>
+</html>
